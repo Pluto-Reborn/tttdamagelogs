@@ -3,7 +3,7 @@ local function checkSettings(self, value)
     if value == 1 or value == 2 then
         return GetRoundState() ~= ROUND_ACTIVE
     elseif value == 3 then
-        return GetRoundState() ~= ROUND_ACTIVE or self:IsSpec()
+        return GetRoundState() ~= ROUND_ACTIVE or not self:Alive()
     elseif value == 4 then
         return true
     end

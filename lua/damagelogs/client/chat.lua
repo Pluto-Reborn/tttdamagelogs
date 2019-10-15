@@ -896,7 +896,7 @@ hook.Add("HUDPaint", "Damagelog_Chat", function()
                 show_chats = not show_chats
             end
         elseif drawing and #Damagelog.CurrentChats == 0 then
-            if client:IsSpec() then
+            if (not client:Alive()) then
                 TIPS.Show()
             end
 

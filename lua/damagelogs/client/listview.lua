@@ -116,6 +116,18 @@ function Damagelog:SetLineMenu(item, infos, tbl, roles, text, old_logs)
     infos:RightClick(item, tbl.infos, roles, text)
 end
 
+local function SimpleTime(seconds, fmt)
+	if not seconds then seconds = 0 end
+
+    local ms = (seconds - math.floor(seconds)) * 100
+    seconds = math.floor(seconds)
+    local s = seconds % 60
+    seconds = (seconds - s) / 60
+    local m = seconds % 60
+
+    return string.format(fmt, m, s, ms)
+end
+
 function Damagelog:AddLogsLine(listview, tbl, roles, nofilters, old)
     if type(tbl) ~= "table" then
         return
@@ -132,7 +144,7 @@ function Damagelog:AddLogsLine(listview, tbl, roles, nofilters, old)
     end
 
     local text = infos:ToString(tbl.infos, roles)
-    local item = listview:AddLine(util.SimpleTime(tbl.time, "%02i:%02i"), infos.Type, text, "")
+    local item = listview:AddLine(SimpleTime(tbl.time, "%02i:%02i"), infos.Type, text, "")
 
     if tbl.infos.icon then
         if tbl.infos.icon[1] then
@@ -195,7 +207,7 @@ function Damagelog:SetRolesListView(listview, tbl)
     end
 
     for _, v in pairs(tbl) do
-        if v.role ~= ROLE_INNOCENT or GetConVar("ttt_dmglogs_showinnocents"):GetBool() then
+        if v.role ~= "innocent" or GetConVar("ttt_dmglogs_showinnocents"):GetBool() then
             self:AddRoleLine(listview, v.nick, v.role)
         end
     end
@@ -235,7 +247,7 @@ function Damagelog:AddRoleLine(listview, nick, role)
                 local ent = self.RoleNicks and self.RoleNicks[panel.Nick]
 
                 if IsValid(ent) then
-                    panel:SetColumnText(3, ent:Alive() and not (ent.IsGhost and ent:IsGhost()) and not ent:IsSpec() and TTTLogTranslate(GetDMGLogLang, "Yes") or TTTLogTranslate(GetDMGLogLang, "No"))
+                    panel:SetColumnText(3, ent:Alive() and not (ent.IsGhost and ent:IsGhost()) and ent:Alive() and TTTLogTranslate(GetDMGLogLang, "Yes") or TTTLogTranslate(GetDMGLogLang, "No"))
                 else
                     panel:SetColumnText(3, TTTLogTranslate(GetDMGLogLang, "ChatDisconnected"))
                 end

@@ -17,11 +17,11 @@ function event:Initialize()
     function GAMEMODE:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
         local original_dmg = dmginfo:GetDamage()
 
-        if IsValid(att) then
+        if old_func then
             old_func(self, ent, infl, att, amount, dmginfo)
         end
 
-        hook.Call("PlayerTakeRealDamage", GAMEMODE, ent, dmginfo, original_dmg)
+        hook.Run("PlayerTakeRealDamage", ent, dmginfo, original_dmg)
     end
 end
 

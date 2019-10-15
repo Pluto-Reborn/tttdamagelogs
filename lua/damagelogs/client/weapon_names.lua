@@ -14,15 +14,7 @@ local function UpdateWeaponNames()
         local printName = v.PrintName
         local class = v.ClassName
 
-        if class and printName then
-            local translated = LANG.TryTranslation(printName)
-
-            if not translated then
-                translated = LANG.TryTranslation(class)
-            end
-
-            Damagelog.NamesTable[class] = translated or printName
-        end
+        Damagelog.NamesTable[class] = printName
     end
 end
 
@@ -41,4 +33,4 @@ local function GetLangInitFunction()
     end
 end
 
-hook.Add("Initialize", "DL_WeaponNames", GetLangInitFunction)
+-- hook.Add("Initialize", "DL_WeaponNames", GetLangInitFunction)

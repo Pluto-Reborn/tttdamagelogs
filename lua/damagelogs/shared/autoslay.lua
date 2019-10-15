@@ -140,7 +140,7 @@ ULib.cmds.optional, ULib.cmds.takeRestOfLine
     })
 end
 
-hook.Add("Initialize", "AutoSlay", CreateCommand)
+--hook.Add("Initialize", "AutoSlay", CreateCommand)
 
 hook.Add("ShouldCollide", "ShouldCollide_Ghost", function(ent1, ent2)
     if IsValid(ent1) and IsValid(ent2) then

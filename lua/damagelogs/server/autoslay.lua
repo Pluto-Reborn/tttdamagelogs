@@ -430,7 +430,7 @@ hook.Add("TTTBeginRound", "Damagelog_AutoSlay", function()
                     ply:SetCleanRound(false)
                     ply:SetNWBool("body_found", true)
 
-                    if not ROLES and ply:GetRole() == ROLE_TRAITOR or ROLES and ply:HasTeamRole(TEAM_TRAITOR) then
+                    if not ROLES and ply:GetRoleTeam() == "traitor" or ROLES and ply:HasTeamRole(TEAM_TRAITOR) then
                         SendConfirmedTraitors(GetInnocentFilter(false))
                     end
 
@@ -452,7 +452,7 @@ hook.Add("PlayerDisconnected", "Autoslay_Message", function(ply)
     end
 end)
 
-if Damagelog.ULX_Autoslay_ForceRole then
+if false and Damagelog.ULX_Autoslay_ForceRole then
     hook.Add("Initialize", "Autoslay_ForceRole", function()
         if not ROLES then
             local function GetTraitorCount(ply_count)
@@ -477,9 +477,9 @@ if Damagelog.ULX_Autoslay_ForceRole then
                 local choices = {}
 
                 local prev_roles = {
-                    [ROLE_INNOCENT] = {},
-                    [ROLE_TRAITOR] = {},
-                    [ROLE_DETECTIVE] = {}
+                    Innocent = {},
+                    Traitor = {},
+                    Detective = {}
                 }
 
                 if not GAMEMODE.LastRole then
@@ -487,13 +487,13 @@ if Damagelog.ULX_Autoslay_ForceRole then
                 end
 
                 for _, v in ipairs(player.GetHumans()) do
-                    if IsValid(v) and (not v:IsSpec()) and not (v.AutoslaysLeft and tonumber(v.AutoslaysLeft) > 0) then
-                        local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
+                    if IsValid(v) and v:Alive() and not (v.AutoslaysLeft and tonumber(v.AutoslaysLeft) > 0) then
+                        local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or "innocent"
                         table.insert(prev_roles[r], v)
                         table.insert(choices, v)
                     end
 
-                    v:SetRole(ROLE_INNOCENT)
+                    v:SetRole "Innocent"
                 end
 
                 local choice_count = #choices
@@ -510,8 +510,8 @@ if Damagelog.ULX_Autoslay_ForceRole then
                     local pick = math.random(1, #choices)
                     local pply = choices[pick]
 
-                    if IsValid(pply) and ((not table.HasValue(prev_roles[ROLE_TRAITOR], pply)) or (math.random(1, 3) == 2)) then
-                        pply:SetRole(ROLE_TRAITOR)
+                    if IsValid(pply) and ((not table.HasValue(prev_roles.traitor, pply)) or (math.random(1, 3) == 2)) then
+                        pply:SetRole "Traitor"
                         table.remove(choices, pick)
                         ts = ts + 1
                     end
@@ -524,7 +524,7 @@ if Damagelog.ULX_Autoslay_ForceRole then
                     if #choices <= (det_count - ds) then
                         for _, pply in pairs(choices) do
                             if IsValid(pply) then
-                                pply:SetRole(ROLE_DETECTIVE)
+                                pply:SetRole "Detective"
                             end
                         end
 
@@ -534,9 +534,9 @@ if Damagelog.ULX_Autoslay_ForceRole then
                     local pick = math.random(1, #choices)
                     local pply = choices[pick]
 
-                    if IsValid(pply) and (pply:GetBaseKarma() > min_karma and table.HasValue(prev_roles[ROLE_INNOCENT], pply) or math.random(1, 3) == 2) then
+                    if IsValid(pply) and (pply:GetBaseKarma() > min_karma and table.HasValue(prev_roles.Innocent, pply) or math.random(1, 3) == 2) then
                         if not pply:GetAvoidDetective() then
-                            pply:SetRole(ROLE_DETECTIVE)
+                            pply:SetRole "Detective"
                             ds = ds + 1
                         end
 

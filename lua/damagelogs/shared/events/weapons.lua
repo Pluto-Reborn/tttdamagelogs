@@ -27,8 +27,7 @@ function event:ToString(v, roles)
 
             for _, v in pairs(role) do
                 if v.id == weapon then
-                    local translated = LANG.TryTranslation(v.name)
-                    weapon = translated or v.name
+                    weapon = v.name
                     found = true
                     break
                 end

@@ -1,6 +1,6 @@
 if SERVER then
     Damagelog:EventHook("TTTAddCredits")
-    Damagelog:EventHook("Initialize")
+    --Damagelog:EventHook("Initialize")
 else
     Damagelog:AddFilter("filter_show_credits", DAMAGELOG_FILTER_BOOL, false)
     Damagelog:AddColor("color_credits", Color(255, 155, 0))
@@ -19,7 +19,7 @@ function event:TTTAddCredits(ply, credits)
         [2] = credits
     })
 end
-
+--[[
 function event:Initialize()
     local plymeta = FindMetaTable("Player")
 
@@ -33,7 +33,7 @@ function event:Initialize()
         self:SetCredits(self:GetCredits() + amt)
         hook.Call("TTTAddCredits", GAMEMODE, self, amt)
     end
-end
+end]]
 
 function event:ToString(v, roles)
     local ply = Damagelog:InfoFromID(roles, v[1])

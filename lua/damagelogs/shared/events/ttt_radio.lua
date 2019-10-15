@@ -42,6 +42,8 @@ function event:TTTPlayerRadioCommand(ply, msg_name, msg_target)
 end
 
 function event:ToString(v, roles)
+
+    do return tostring(v) end
     -- copied localization from cl_voice.lua
     local targetply = true
     local param = v[3]
