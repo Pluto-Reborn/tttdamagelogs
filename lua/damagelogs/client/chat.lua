@@ -872,7 +872,7 @@ hook.Add("HUDPaint", "Damagelog_Chat", function()
         local w, h = ScrW() / 2, ScrH() - 50
 
         if not drawing and #Damagelog.CurrentChats > 0 then
-            TIPS.Hide()
+            --TIPS.Hide()
             drawing = true
 
             if Damagelog.ChatButton then
@@ -897,7 +897,7 @@ hook.Add("HUDPaint", "Damagelog_Chat", function()
             end
         elseif drawing and #Damagelog.CurrentChats == 0 then
             if (not client:Alive()) then
-                TIPS.Show()
+               -- TIPS.Show()
             end
 
             drawing = false
