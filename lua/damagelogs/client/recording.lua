@@ -379,6 +379,30 @@ hook.Add("RenderScreenspaceEffects", "DeathScene_Damagelog", function()
     end
 end)
 
+local healthcolors = {
+    healthy = Color(0, 255, 0, 255),
+    hurt    = Color(170, 230, 10, 255),
+    wounded = Color(230, 215, 10, 255),
+    badwound= Color(255, 140, 0, 255),
+    death   = Color(255, 0, 0, 255)
+};
+
+function util.HealthToString(health, maxhealth)
+    maxhealth = maxhealth or 100
+
+    if health > maxhealth * 0.9 then
+        return "hp_healthy", healthcolors.healthy
+    elseif health > maxhealth * 0.7 then
+        return "hp_hurt", healthcolors.hurt
+    elseif health > maxhealth * 0.45 then
+        return "hp_wounded", healthcolors.wounded
+    elseif health > maxhealth * 0.2 then
+        return "hp_badwnd", healthcolors.badwound
+    else
+        return "hp_death", healthcolors.death
+    end
+end
+
 hook.Add("HUDPaint", "Scene_Record", function()
     if current_scene then
         surface.SetFont("TabLarge")

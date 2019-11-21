@@ -207,7 +207,7 @@ function Damagelog:SetRolesListView(listview, tbl)
     end
 
     for _, v in pairs(tbl) do
-        if v.role ~= "innocent" or GetConVar("ttt_dmglogs_showinnocents"):GetBool() then
+        if (v.role ~= "innocent" and v.role ~= "Innocent") or GetConVar("ttt_dmglogs_showinnocents"):GetBool() then
             self:AddRoleLine(listview, v.nick, v.role)
         end
     end
