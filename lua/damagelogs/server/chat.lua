@@ -303,7 +303,7 @@ net.Receive("DL_CloseChat", function(_len, ply)
     local id = net.ReadUInt(32)
     local to_add = net.ReadEntity()
 
-    if not ply:CanUseRDMManager() or not IsValid(to_add) or not to_add:IsPlayer() then
+    if not ply:CanUseRDMManager() then
         return
     end
 
