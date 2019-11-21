@@ -226,14 +226,12 @@ function Damagelog:AddRoleLine(listview, nick, role)
 
         function item:PaintOver()
             for _, v in pairs(item.Columns) do
-                if role < 0 then
-                    v:SetTextColor(role_colors["disconnected"])
+                if (ttt and ttt.roles) then
+                    v:SetTextColor(ttt.roles[role].Color)
+                elseif not ROLES then
+                    v:SetTextColor(role_colors[role])
                 else
-                    if not ROLES then
-                        v:SetTextColor(role_colors[role])
-                    else
-                        v:SetTextColor(GetRoleByIndex(role).color)
-                    end
+                    v:SetTextColor(GetRoleByIndex(role).color)
                 end
             end
         end

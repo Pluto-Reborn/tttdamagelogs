@@ -11,6 +11,46 @@ surface.CreateFont("DL_Highlight", {
     size = 13
 })
 
+
+COLOR_WHITE  = Color(255, 255, 255, 255)
+COLOR_BLACK  = Color(0, 0, 0, 255)
+COLOR_GREEN  = Color(0, 255, 0, 255)
+COLOR_DGREEN = Color(0, 100, 0, 255)
+COLOR_RED    = Color(255, 0, 0, 255)
+COLOR_YELLOW = Color(200, 200, 0, 255)
+COLOR_LGRAY  = Color(200, 200, 200, 255)
+COLOR_BLUE   = Color(0, 0, 255, 255)
+COLOR_NAVY   = Color(0, 0, 100, 255)
+COLOR_PINK   = Color(255,0,255, 255)
+COLOR_ORANGE = Color(250, 100, 0, 255)
+COLOR_OLIVE  = Color(100, 100, 0, 255)
+
+--- Tip cycling button
+PANEL = {}
+
+PANEL.Colors = {
+   default = COLOR_LGRAY,
+   hover = COLOR_WHITE,
+   press = COLOR_RED
+};
+
+function PANEL:Paint()
+   -- parent panel will deal with the normal bg, we only need to worry about
+   -- mouse effects
+
+   local clr = self.Colors.default
+   if self.Depressed then
+      clr = self.Colors.press
+   elseif self.Hovered then
+      clr = self.Colors.hover
+   end
+
+   surface.SetDrawColor(clr.r, clr.g, clr.b, clr.a)
+   self:DrawOutlinedRect()
+end
+
+derma.DefineControl("TipsButton", "Tip cycling button", PANEL, "DButton")
+
 local PANEL = {}
 
 function PANEL:SetPlayer(nick)
