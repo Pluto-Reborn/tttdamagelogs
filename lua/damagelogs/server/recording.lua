@@ -33,7 +33,7 @@ timer.Create("SpecDM_Recording", 0.2, 0, function()
         end
     end
 
-    for _, v in ipairs(player.GetHumans()) do
+    for _, v in ipairs(player.GetAll()) do
         if not v:IsActive() then
             local rag = v.server_ragdoll
 
@@ -59,7 +59,7 @@ timer.Create("SpecDM_Recording", 0.2, 0, function()
                 role = v:GetRole()
             }
 
-            if IsValid(wep) and wep:GetClass() == "weapon_zm_carry" and IsValid(wep.EntHolding) then
+            if IsValid(wep) and (wep:GetClass() == "weapon_ttt_magneto" or wep:GetClass() == "weapon_zm_carry") and IsValid(wep.EntHolding) then
                 local found = false
 
                 for k, v2 in pairs(magneto_ents) do

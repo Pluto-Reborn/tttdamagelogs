@@ -57,13 +57,14 @@ function Damagelog:shootCallback(weapon)
 end
 
 hook.Add("EntityFireBullets", "BulletsCallback_DamagelogInfos", function(ent, data)
-    if not IsValid(ent) or not ent:IsPlayer() then
+    local ply = IsValid(ent) and ent:IsPlayer() and ent or data.Attacker
+    if not IsValid(ply) or not ply:IsPlayer() then
         return
     end
 
-    local wep = ent:GetActiveWeapon()
+    local wep = IsValid(ent) and ent:IsWeapon() and ent or ply:GetActiveWeapon()
 
-    if IsValid(wep) and wep.Base == "weapon_tttbase" then
+    if IsValid(wep) then
         Damagelog:shootCallback(wep)
     end
 end)
