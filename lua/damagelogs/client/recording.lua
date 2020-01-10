@@ -403,9 +403,10 @@ function util.HealthToString(health, maxhealth)
     end
 end
 
+surface.CreateFont("dl_font", {font = "Lato", size = 13, weight = 900})
 hook.Add("HUDPaint", "Scene_Record", function()
     if current_scene then
-        surface.SetFont("TabLarge")
+        surface.SetFont("dl_font")
 
         for id, model in pairs(models) do
             local nick = Damagelog:InfoFromID(roles, id).nick
