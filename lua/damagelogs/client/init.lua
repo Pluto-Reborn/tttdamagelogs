@@ -209,6 +209,10 @@ net.Receive("DL_InformSuperAdmins", function()
 end)
 
 net.Receive("DL_Ded", function()
+    if (hook.Run "PreventRDMManagerPopup") then
+        return
+    end
+
     if Damagelog.RDM_Manager_Enabled and GetConVar("ttt_dmglogs_rdmpopups"):GetBool() and net.ReadUInt(1, 1) == 1 then
         local client = LocalPlayer()
 
