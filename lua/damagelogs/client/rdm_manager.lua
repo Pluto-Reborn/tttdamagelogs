@@ -358,6 +358,9 @@ function Damagelog:ReportWindow(found, deathLogs, previousReports, currentReport
     Entry:SetPos(210, 47)
     Entry:SetSize(370, 85)
     Entry:SetMultiline(true)
+    function Entry:AllowInput(c)
+        return self:GetText():len() > 256
+    end
     local DNAPanel = vgui.Create("DPanel", ReportPanel)
     DNAPanel:SetPos(210, 138)
     DNAPanel:SetSize(370, 25)
@@ -438,7 +441,7 @@ function Damagelog:ReportWindow(found, deathLogs, previousReports, currentReport
 
         net.Start("DL_ReportPlayer")
         net.WriteEntity(ply)
-        net.WriteString(Entry:GetText())
+        net.WriteString(Entry:GetText():sub(1, 256))
 
         if not isAdmin then
             net.WriteUInt(DAMAGELOG_REPORT_STANDARD, 3)

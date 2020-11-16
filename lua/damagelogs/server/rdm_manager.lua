@@ -309,7 +309,7 @@ hook_Add("TTTFoundDNA", "Damagelog", OnDNAFound)
 
 net.Receive("DL_ReportPlayer", function(_len, ply)
     local attacker = net.ReadEntity()
-    local message = net.ReadString()
+    local message = net.ReadString():sub(1, 256)
     local reportType = net.ReadUInt(3)
 
     if not ply:CanUseRDMManager() then
